@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CountryCollection extends JsonResource
+class CitizenCollection extends JsonResource
 {
     /**
      * Transform the resource collection into an array.
@@ -15,12 +15,6 @@ class CountryCollection extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            "name" => $this->name,
-            "image" => $this->image,
-            "link to country" => [
-                route("countries.show", $this->id)
-            ]
-        ];
+        return parent::toArray($request);
     }
 }

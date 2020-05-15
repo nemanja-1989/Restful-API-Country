@@ -10,4 +10,8 @@ class Country extends Model
         "name",
         "image"
     ];
+
+    public function citizens() {
+        return $this->hasMany(Citizen::class);
+    }
 }
