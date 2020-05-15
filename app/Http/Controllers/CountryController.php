@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Country;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Resources\CountryResource;
+use App\Http\Resources\CountryCollection;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+
 
 class CountryController extends Controller
 {
@@ -14,7 +20,16 @@ class CountryController extends Controller
      */
     public function index()
     {
-        //
+
+        $countries = Country::get();
+
+        //return response()->json([
+        //    "countries" => $countries
+        //], 200);
+
+        return response()->json([
+            "countries" => CountryCollection::collection($countries)
+        ], 200);
     }
 
     /**
@@ -25,7 +40,24 @@ class CountryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $this->validate($request, [
+            "name" => ["required"],
+            "image" => ["image", "max:5000"]
+        ]);
+
+        $country = Country::create($data);
+
+        if($request->hasFile("image") && $request->file("image")->isValid()) {
+            $image = $request->file("image");
+            $newImage = mt_rand(1, 100) . $image->getClientOriginalName();
+            $image->storeAs("images", $newImage, "public");
+            $country->image = $newImage; 
+        }
+        $country->save();
+
+        return response()->json([
+            "country_stored" => new CountryResource($country)
+        ], 201);
     }
 
     /**
@@ -36,7 +68,13 @@ class CountryController extends Controller
      */
     public function show(Country $country)
     {
-        //
+        //return response()->json([
+        //    "country" => $country
+        //], 200);
+
+        return response()->json([
+            "country" => new CountryResource($country)
+        ], 200);
     }
 
     /**
@@ -48,7 +86,25 @@ class CountryController extends Controller
      */
     public function update(Request $request, Country $country)
     {
-        //
+        $data = $this->validate($request, [
+            "name" => ["required"],
+            "image" => ["image", "max:5000"]
+        ]);
+
+        $country->update($data);
+
+        if($request->hasFile("image") && $request->file("image")->isValid()) {
+            @unlink("storage/images/" . $country->image);
+            $image = $request->file("image");
+            $newImage = mt_rand(101, 500) . $image->getClientOriginalName();
+            $image->storeAs("images", $newImage, "public");
+            $country->image = $newImage; 
+        }
+        $country->update();
+
+        return response()->json([
+            "country_updated" => new CountryResource($country)
+        ], 205);
     }
 
     /**
@@ -59,6 +115,20 @@ class CountryController extends Controller
      */
     public function destroy(Country $country)
     {
-        //
+        $country->delete();
+
+        return response()->json([
+            "country" => $country,
+            "Action" => "DELETED"
+        ]);
+    }
+
+    public function truncate() {
+        DB::statement("SET FOREIGN_KEY_CHECKS = 0");
+        Country::truncate();
+
+        return response()->json([
+            "Action" => "Country TRUNCATED"
+        ]);
     }
 }

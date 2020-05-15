@@ -19,4 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 //Create Api resource for CountryController
+Route::get("countries/truncate", "CountryController@truncate");
 Route::apiResource("countries", "CountryController");
