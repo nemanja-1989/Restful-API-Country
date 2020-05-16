@@ -16,7 +16,7 @@ class CitizenResource extends JsonResource
     {
         return [
             "country_name" => $this->country->name,
-            "identifier" => $this->id,
+            "citizen_identifier" => $this->id,
             "name" => $this->name,
             "email" => $this->email,
             "status" => $this->status === 1 ? "Active" : "Inactive",

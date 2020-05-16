@@ -3,8 +3,9 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class NumberCollection extends ResourceCollection
+class NumberCollection extends JsonResource
 {
     /**
      * Transform the resource collection into an array.
@@ -14,6 +15,12 @@ class NumberCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            "citizen" => $this->citizen->name,
+            "number" => $this->number,
+            "number_info" => [
+                route("numbers.show", [$this->citizen_id, $this->id])
+            ]
+        ];
     }
 }
