@@ -22,4 +22,8 @@ class Citizen extends Model
     public function numbers() {
         return $this->hasMany(Number::class);
     }
+
+    public function country_blogs() {
+        return $this->hasMany(CountryBlog::class);
+    }
 }
