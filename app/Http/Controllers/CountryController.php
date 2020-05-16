@@ -49,8 +49,8 @@ class CountryController extends Controller
 
         if($request->hasFile("image") && $request->file("image")->isValid()) {
             $image = $request->file("image");
-            $newImage = mt_rand(1, 100) . $image->getClientOriginalName();
-            $image->storeAs("images/country/", $newImage, "public");
+            $newImage = $image->getClientOriginalName();
+            $image->storeAs("images/country", $newImage, "public");
             $country->image = $newImage; 
         }
         $country->save();
@@ -91,13 +91,17 @@ class CountryController extends Controller
             "image" => ["image", "max:5000"]
         ]);
 
-        $country->update($data);
-
+        $country->name = $request->name;
+        $country->update();
+    
         if($request->hasFile("image") && $request->file("image")->isValid()) {
-            @unlink("storage/images/" . $country->image);
+            //dd('/public/images/country/' . $country->image);
+            if($country->image) {
+                Storage::delete('/public/images/country/' . $country->image);
+            }
             $image = $request->file("image");
-            $newImage = mt_rand(101, 500) . $image->getClientOriginalName();
-            $image->storeAs("images/country/", $newImage, "public");
+            $newImage = $image->getClientOriginalName();
+            $image->storeAs("images/country", $newImage, "public");
             $country->image = $newImage; 
         }
         $country->update();

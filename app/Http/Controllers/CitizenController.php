@@ -109,7 +109,9 @@ class CitizenController extends Controller
         $citizen->update();
 
         if($request->hasFile("image") && $request->file("image")->isValid()) {
-            Storage::delete($citizen->image);
+            if($citizen->image) {
+                Storage::delete("/public/images/citizen/" . $citizen->image);
+            }
             $image = $request->file("image");
             $newImage = "citizen " . mt_rand(101, 500) . " " . $image->getClientOriginalName();
             $image->storeAs("images/citizen/", $newImage, "public");

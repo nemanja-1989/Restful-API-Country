@@ -9,6 +9,7 @@ use App\Http\Resources\CountryBlogCollection;
 use App\Http\Resources\CountryBlogResource;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class CountryBlogController extends Controller
 {
@@ -98,7 +99,12 @@ class CountryBlogController extends Controller
         $countryBlog->population = $request->population;
         $countryBlog->area_code = $request->area_code;
         $countryBlog->description = $request->description;
+        $countryBlog->update();
+
         if($request->hasFile("image") && $request->file("image")->isValid()) {
+            if($countryBlog->image) {
+                Storage::delete("/public/images/country_blog/" . $countryBlog->image);
+            }
             $image = $request->file("image");
             $newImage = "country_blog " . mt_rand(1, 100) . " " . $image->getClientOriginalName();
             $image->storeAs("images/country_blog/", $newImage, "public");

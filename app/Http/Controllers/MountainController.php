@@ -9,6 +9,7 @@ use App\Http\Resources\MountainCollection;
 use App\Http\Resources\MountainResource;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class MountainController extends Controller
 {
@@ -55,6 +56,9 @@ class MountainController extends Controller
         $mountain->description = $request->description;
 
         if($request->hasFile("image1") && $request->file("image1")->isValid()) {
+            if($mountain->image1) {
+                Storage::delete("/public/images/mountain/" . $mountain->image1);
+            }
             $image1 = $request->file("image1");
             $newImage1 = "mountain " . mt_rand(1, 100) . " " . $image1->getClientOriginalName();
             $image1->storeAs("images/mountain", $newImage1, "public");
@@ -62,6 +66,9 @@ class MountainController extends Controller
         }
 
         if($request->hasFile("image2") && $request->file("image2")->isValid()) {
+            if($mountain->image2) {
+                Storage::delete("/public/images/mountain/" . $mountain->image2);
+            }
             $image2 = $request->file("image2");
             $newImage2 = "mountain " . mt_rand(1, 100) . " " . $image2->getClientOriginalName();
             $image2->storeAs("images/mountain", $newImage2, "public");
@@ -69,6 +76,9 @@ class MountainController extends Controller
         }
 
         if($request->hasFile("image3") && $request->file("image3")->isValid()) {
+            if($mountain->image3) {
+                Storage::delete("/public/images/mountain/" . $mountain->image3);
+            }
             $image3 = $request->file("image3");
             $newImage3 = "mountain " . mt_rand(1, 100) . " " . $image3->getClientOriginalName();
             $image3->storeAs("images/mountain", $newImage3, "public");
@@ -122,6 +132,7 @@ class MountainController extends Controller
         $mountain->coordination = $request->coordination;
         $mountain->isolation = $request->isolation;
         $mountain->description = $request->description;
+        $mountain->update();
 
         if($request->hasFile("image1") && $request->file("image1")->isValid()) {
             $image1 = $request->file("image1");
