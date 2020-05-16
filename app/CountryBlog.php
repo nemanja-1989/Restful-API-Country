@@ -18,4 +18,8 @@ class CountryBlog extends Model
     public function citizen() {
         return $this->belongsTo(Citizen::class);
     }
+
+    public function mountains() {
+        return $this->hasMany(Mountain::class);
+    }
 }

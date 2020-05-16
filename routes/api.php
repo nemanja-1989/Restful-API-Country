@@ -36,3 +36,8 @@ Route::apiResource("citizens/{citizen}/numbers", "NumberController");
 Route::get("country_blogs", "CountryBlogController@allCountryBlogs");
 Route::get("country_blogs/truncate", "CountryBlogController@truncate");
 Route::apiResource("citizens/{citizen}/country_blogs", "CountryBlogController");
+
+//Create API resource for MountainController
+Route::get("mountains", "MountainController@allMountains");
+Route::get("mountains/truncate", "MountainController@truncate");
+Route::apiResource("country_blogs/{country_blog}/mountains", "MountainController");
