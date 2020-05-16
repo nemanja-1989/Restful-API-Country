@@ -59,7 +59,7 @@ class CitizenController extends Controller
         if($request->hasFile("image") && $request->file("image")->isValid()) {
             $image = $request->file("image");
             $newImage = "citizen " . mt_rand(1, 100) . " " . $image->getClientOriginalName();
-            $image->storeAs("images", $newImage, "public");
+            $image->storeAs("images/citizen/", $newImage, "public");
             $citizen->image = $newImage;
         }
         $citizen->save();
@@ -112,7 +112,7 @@ class CitizenController extends Controller
             Storage::delete($citizen->image);
             $image = $request->file("image");
             $newImage = "citizen " . mt_rand(101, 500) . " " . $image->getClientOriginalName();
-            $image->storeAs("images", $newImage, "public");
+            $image->storeAs("images/citizen/", $newImage, "public");
             $citizen->image = $newImage;
         }
         $citizen->update();

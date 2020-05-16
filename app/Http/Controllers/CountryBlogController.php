@@ -50,7 +50,7 @@ class CountryBlogController extends Controller
         if($request->hasFile("image") && $request->file("image")->isValid()) {
             $image = $request->file("image");
             $newImage = "country_blog " . mt_rand(1, 100) . " " . $image->getClientOriginalName();
-            $image->storeAs("images", $newImage, "public");
+            $image->storeAs("images/country_blog/", $newImage, "public");
             $countryBlog->image = $newImage;
         }
         $citizen->country_blogs()->save($countryBlog);
@@ -101,7 +101,7 @@ class CountryBlogController extends Controller
         if($request->hasFile("image") && $request->file("image")->isValid()) {
             $image = $request->file("image");
             $newImage = "country_blog " . mt_rand(1, 100) . " " . $image->getClientOriginalName();
-            $image->storeAs("images", $newImage, "public");
+            $image->storeAs("images/country_blog/", $newImage, "public");
             $countryBlog->image = $newImage;
         }
         //$citizen->country_blogs()->save($countryBlog);

@@ -14,6 +14,19 @@ class MountainResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            "mountain_indentifier" => $this->id,
+            "name" => $this->name,
+            "elevation" => $this->elevation,
+            "promience" => $this->promience,
+            "coordination" => $this->coordination,
+            "isolation" => $this->isolation,
+            "image1" => $this->image1,
+            "image2" => $this->image2,
+            "image3" => $this->image3,
+            "description" => $this->description,
+            "created" => $this->created_at->diffForHumans(),
+            "updated" => $this->created_at->diffForHumans()
+        ];
     }
 }
