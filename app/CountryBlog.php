@@ -22,4 +22,8 @@ class CountryBlog extends Model
     public function mountains() {
         return $this->hasMany(Mountain::class);
     }
+
+    public function rivers() {
+        return $this->hasMany(River::class);
+    }
 }
