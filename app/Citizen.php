@@ -18,4 +18,8 @@ class Citizen extends Model
     public function country() {
         return $this->belongsTo(Country::class);
     }
+
+    public function numbers() {
+        return $this->hasMany(Number::class);
+    }
 }
