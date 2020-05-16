@@ -15,6 +15,13 @@ class CitizenCollection extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [ 
+            "name" => $this->name,
+            "email" => $this->email,
+            "country_name" => $this->country->name,
+            "citizen_info" => [
+                route("citizens.show", [$this->country_id, $this->id])
+            ]
+        ];
     }
 }

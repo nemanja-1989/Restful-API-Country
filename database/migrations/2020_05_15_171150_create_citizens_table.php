@@ -19,7 +19,7 @@ class CreateCitizensTable extends Migration
             $table->foreign("country_id")->references("id")->on("countries")->onDelete("cascade")->onUpdate("cascade");
             $table->string("name", "45");
             $table->string("email", "45");
-            $table->string("password", "45");
+            $table->string("password");
             $table->tinyInteger("status")->unsigned();
             $table->string("image")->nullable();
             $table->timestamps();

@@ -14,6 +14,16 @@ class CitizenResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            "country_name" => $this->country->name,
+            "identifier" => $this->id,
+            "name" => $this->name,
+            "email" => $this->email,
+            "status" => $this->status === 1 ? "Active" : "Inactive",
+            "image" =>  $this->image,
+            "created" => $this->created_at->diffForHumans(),
+            "updated" => $this->updated_at->diffForHumans(),
+        ];
+        //dd($request);
     }
 }
