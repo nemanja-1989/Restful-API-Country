@@ -3,8 +3,9 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class CountryBlogCollection extends ResourceCollection
+class CountryBlogCollection extends JsonResource
 {
     /**
      * Transform the resource collection into an array.
@@ -14,6 +15,12 @@ class CountryBlogCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            "name" => $this->name,
+            "image" => $this->image,
+            "country_blog_info" => [
+                route("country_blogs.show", [$this->citizen_id, $this->id])
+            ] 
+        ];
     }
 }

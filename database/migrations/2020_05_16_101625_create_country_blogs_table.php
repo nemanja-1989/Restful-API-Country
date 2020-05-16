@@ -21,6 +21,7 @@ class CreateCountryBlogsTable extends Migration
             $table->string("population");
             $table->string("area_code");
             $table->string("description", "1000");
+            $table->string("image")->nullable();
             $table->timestamps();
         });
     }
