@@ -15,6 +15,11 @@ class RiverCollection extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            "name" => $this->name,
+            "river_info" => [
+                route("rivers.show", [$this->country_blog_id, $this->id])
+            ]
+        ];
     }
 }

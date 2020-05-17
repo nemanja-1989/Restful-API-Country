@@ -106,7 +106,7 @@ class CountryBlogController extends Controller
                 Storage::delete("/public/images/country_blog/" . $countryBlog->image);
             }
             $image = $request->file("image");
-            $newImage = "country_blog " . mt_rand(1, 100) . " " . $image->getClientOriginalName();
+            $newImage = "country_blog " . mt_rand(101, 500) . " " . $image->getClientOriginalName();
             $image->storeAs("images/country_blog/", $newImage, "public");
             $countryBlog->image = $newImage;
         }
@@ -129,6 +129,10 @@ class CountryBlogController extends Controller
      */
     public function destroy(Citizen $citizen, CountryBlog $countryBlog)
     {
+        if($countryBlog->image) {
+            Storage::delete("/public/images/country_blog/" . $countryBlog->image);
+        }
+        
         $countryBlog->delete();
 
         return response()->json([

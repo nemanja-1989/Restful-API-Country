@@ -132,6 +132,10 @@ class CitizenController extends Controller
      */
     public function destroy(Country $country, Citizen $citizen)
     {
+        if($citizen->image) {
+            Storage::delete("/public/images/citizen/" . $citizen->image);
+        }
+        
         $citizen->delete();
 
         return response()->json([

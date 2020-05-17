@@ -56,9 +56,6 @@ class MountainController extends Controller
         $mountain->description = $request->description;
 
         if($request->hasFile("image1") && $request->file("image1")->isValid()) {
-            if($mountain->image1) {
-                Storage::delete("/public/images/mountain/" . $mountain->image1);
-            }
             $image1 = $request->file("image1");
             $newImage1 = "mountain " . mt_rand(1, 100) . " " . $image1->getClientOriginalName();
             $image1->storeAs("images/mountain", $newImage1, "public");
@@ -66,9 +63,6 @@ class MountainController extends Controller
         }
 
         if($request->hasFile("image2") && $request->file("image2")->isValid()) {
-            if($mountain->image2) {
-                Storage::delete("/public/images/mountain/" . $mountain->image2);
-            }
             $image2 = $request->file("image2");
             $newImage2 = "mountain " . mt_rand(1, 100) . " " . $image2->getClientOriginalName();
             $image2->storeAs("images/mountain", $newImage2, "public");
@@ -76,9 +70,6 @@ class MountainController extends Controller
         }
 
         if($request->hasFile("image3") && $request->file("image3")->isValid()) {
-            if($mountain->image3) {
-                Storage::delete("/public/images/mountain/" . $mountain->image3);
-            }
             $image3 = $request->file("image3");
             $newImage3 = "mountain " . mt_rand(1, 100) . " " . $image3->getClientOriginalName();
             $image3->storeAs("images/mountain", $newImage3, "public");
@@ -135,22 +126,31 @@ class MountainController extends Controller
         $mountain->update();
 
         if($request->hasFile("image1") && $request->file("image1")->isValid()) {
+            if($mountain->image1) {
+                Storage::delete("/public/images/mountain/" . $mountain->image1);
+            }
             $image1 = $request->file("image1");
-            $newImage1 = "mountain " . mt_rand(1, 100) . " " . $image1->getClientOriginalName();
+            $newImage1 = "mountain " . mt_rand(101, 500) . " " . $image1->getClientOriginalName();
             $image1->storeAs("images/mountain", $newImage1, "public");
             $mountain->image1 = $newImage1;
         }
 
         if($request->hasFile("image2") && $request->file("image2")->isValid()) {
+            if($mountain->image2) {
+                Storage::delete("/public/images/mountain/" . $mountain->image2);
+            }
             $image2 = $request->file("image2");
-            $newImage2 = "mountain " . mt_rand(1, 100) . " " . $image2->getClientOriginalName();
+            $newImage2 = "mountain " . mt_rand(101, 500) . " " . $image2->getClientOriginalName();
             $image2->storeAs("images/mountain", $newImage2, "public");
             $mountain->image2 = $newImage2;
         }
 
         if($request->hasFile("image3") && $request->file("image3")->isValid()) {
+            if($mountain->image3) {
+                Storage::delete("/public/images/mountain/" . $mountain->image3);
+            }
             $image3 = $request->file("image3");
-            $newImage3 = "mountain " . mt_rand(1, 100) . " " . $image3->getClientOriginalName();
+            $newImage3 = "mountain " . mt_rand(101, 500) . " " . $image3->getClientOriginalName();
             $image3->storeAs("images/mountain/", $newImage3, "public");
             $mountain->image3 = $newImage3;
         }
@@ -170,6 +170,17 @@ class MountainController extends Controller
      */
     public function destroy(CountryBlog $countryBlog, Mountain $mountain)
     {
+        if($mountain->image1) {
+            Storage::delete("/public/images/mountain/" . $mountain->image1);
+        }
+
+        if($mountain->image2) {
+            Storage::delete("/public/images/mountain/" . $mountain->image2);
+        }
+
+        if($mountain->image3) {
+            Storage::delete("/public/images/mountain/" . $mountain->image3);
+        }
         $mountain->delete();
 
         return response()->json([

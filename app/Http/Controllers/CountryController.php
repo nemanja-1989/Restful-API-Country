@@ -49,7 +49,7 @@ class CountryController extends Controller
 
         if($request->hasFile("image") && $request->file("image")->isValid()) {
             $image = $request->file("image");
-            $newImage = $image->getClientOriginalName();
+            $newImage = "country " . mt_rand(1, 100) . " " . $image->getClientOriginalName();
             $image->storeAs("images/country", $newImage, "public");
             $country->image = $newImage; 
         }
@@ -100,7 +100,7 @@ class CountryController extends Controller
                 Storage::delete('/public/images/country/' . $country->image);
             }
             $image = $request->file("image");
-            $newImage = $image->getClientOriginalName();
+            $newImage = "country " . mt_rand(101, 500) . " " . $image->getClientOriginalName();
             $image->storeAs("images/country", $newImage, "public");
             $country->image = $newImage; 
         }
@@ -119,6 +119,10 @@ class CountryController extends Controller
      */
     public function destroy(Country $country)
     {
+        if($country->image) {
+            Storage::delete("/public/images/country/" . $country->image);
+        }
+
         $country->delete();
 
         return response()->json([

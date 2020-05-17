@@ -21,6 +21,7 @@ class CreateRiversTable extends Migration
             $table->string("length");
             $table->string("size");
             $table->string("coordinates");
+            $table->string("description", "1000");
             $table->string("image1")->nullable();
             $table->string("image2")->nullable();
             $table->string("image3")->nullable();
